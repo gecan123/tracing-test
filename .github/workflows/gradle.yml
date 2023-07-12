@@ -28,12 +28,15 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Run unit test
+    - name: test
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: test
-    - name: Upload build reports
+    - name: upload
+      if: failure()
       uses: actions/upload-artifact@v3
       with:
-        name: build-reports
-        path: build/reports/
+        name: reports
+        path: |
+          **/build/reports/
+          **/build/test-results/
